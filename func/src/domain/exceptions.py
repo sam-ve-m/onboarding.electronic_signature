@@ -3,9 +3,23 @@ class ErrorOnDecodeJwt(Exception):
           " jwt not decoded successfully"
 
 
+class ErrorOnEncryptElectronicSignature(Exception):
+    msg = "Jormungandr-Onboarding::encrypt_password::Fail when trying to encrypt electronic signature"
+
+
 class UserUniqueIdNotExists(Exception):
-    msg = "Jormungandr-Onboarding::get_registration_data::Not exists an user with this unique_id"
+    msg = "Jormungandr-Onboarding::_verify_user_and_electronic_signature_exists::Not exists an user with this unique_id"
 
 
 class UserElectronicSignatureAlreadyExists(Exception):
-    mas = ''
+    msg = "Jormungandr-Onboarding::_verify_user_and_electronic_signature_exists::User electronic signature already" \
+          " exists"
+
+
+class ErrorOnSendAuditLog(Exception):
+    msg = "Jormungandr-Onboarding::set_electronic_signature::Error when trying to send log audit on " \
+          "Persephone"
+
+
+class ErrorOnUpdateUser(Exception):
+    msg = "Jormungandr-Onboarding::set_electronic_signature::Error on trying to update user in mongo_db"

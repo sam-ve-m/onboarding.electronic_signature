@@ -1,7 +1,7 @@
 # Jormungandr - Onboarding
 from ...domain.exceptions import ErrorOnSendAuditLog
 from ...domain.enums.types import QueueTypes
-from ...domain.complementary_data.model import ComplementaryDataModel
+from ...domain.user_electronic_signature.model import UserElectronicSignature
 
 # Third party
 from decouple import config
@@ -13,11 +13,11 @@ class Audit:
     audit_client = Persephone
     partition = QueueTypes.USER_SET_ELECTRONIC_SIGNATURE
     topic = config("PERSEPHONE_TOPIC_USER")
-    schema_name = config("PERSEPHONE_SET_ELECTRONIC_SIGNATURE")
+    schema_name = config("PERSEPHONE_ELECTRONIC_SIGNATURE_SCHEMA")
 
     @classmethod
-    async def register_log(cls, complementary_data_model: ComplementaryDataModel):
-        message = await complementary_data_model.get_audit_template()
+    async def register_log(cls, electronic_signature_model: UserElectronicSignature):
+        message = await electronic_signature_model.get_user_electronic_signature_template()
         (
             success,
             status_sent_to_persephone
@@ -30,17 +30,3 @@ class Audit:
         if not success:
             Gladsheim.error(message="Audit::register_user_log::Error on trying to register log")
             raise ErrorOnSendAuditLog
-
-        def get_user_set_electronic_signature_schema_template_with_data(
-                payload: dict, unique_id: str
-        ) -> dict:
-            return {
-                "unique_id": unique_id,
-                "electronic_signature": payload.get("electronic_signature"),
-                "is_blocked_electronic_signature": payload.get(
-                    "is_blocked_electronic_signature"
-                ),
-                "electronic_signature_wrong_attempts": payload.get(
-                    "electronic_signature_wrong_attempts"
-                ),
-            }
