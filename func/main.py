@@ -17,8 +17,8 @@ from src.services.electronic_signature import ElectronicSignatureService
 from http import HTTPStatus
 
 # Third party
-from flask import request, Response
 from etria_logger import Gladsheim
+from flask import request, Response
 
 
 async def set_electronic_signature() -> Response:

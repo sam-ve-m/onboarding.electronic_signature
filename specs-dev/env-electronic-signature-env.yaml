@@ -1,0 +1,108 @@
+apiVersion: fission.io/v1
+kind: Environment
+metadata:
+  creationTimestamp: null
+  name: electronic-signature-env
+  namespace: default
+spec:
+  builder:
+    command: build
+    container:
+      name: ""
+      resources: {}
+    image: nexus.sigame.com.br/fission-builder-3.8:0.0.1
+  imagepullsecret: ""
+  keeparchive: false
+  poolsize: 3
+  resources: {}
+  runtime:
+    container:
+      name: ""
+      resources: {}
+    image: nexus.sigame.com.br/fission-async:0.1.6
+    podspec:
+      containers:
+        - name: electronic-signature-env
+          env:
+            - name: ROOT_LOG_LEVEL
+              value: "INFO"
+            - name: ETRIA_LOG_LEVEL
+              value: "INFO"
+            - name: ASGI_FRAMEWORK
+              value: "HYPERCORN"
+            - name: PERSEPHONE_ELECTRONIC_SIGNATURE_SCHEMA
+              value: "user_set_electronic_signature_schema"
+            - name: PERSEPHONE_TOPIC_USER
+              value: "sphinx_persephone.user.crud"
+            - name: PERSEPHONE_QUEUE_HOST
+              value: "172.30.10.105"
+            - name: PERSEPHONE_QUEUE_PORT
+              value: "9092"
+            - name: PERSEPHONE_KAFKA_BROKERS
+              value: "172.30.10.105:9092"
+            - name: MONGO_CONNECTION_URL
+              value: "mongodb://bnd:jkl321pqr@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary&appname=MongoDB%20Compass&ssl=false"
+            - name: MONGODB_DATABASE_NAME
+              value: "lionx"
+            - name: MONGODB_USER_COLLECTION
+              value: "users"
+            - name: VALHALLA_HOST
+              value: "172.30.10.105"
+            - name: VALHALLA_PORT
+              value: "9092"
+            - name: HEIMDALL_REGION_NAME
+              value: "sa-east-1"
+            - name: HEIMDALL_FILE_BUCKET_NAME
+              value: "heimdall_rsa"
+            - name: HEIMDALL_BUCKET_NAME_KEY
+              value: "auth-gateway-keys-dev"
+            - name: HEIMDALL_AWS_ACCESS_KEY_ID
+              value: "AKIATZVFXI25USQWCS5O"
+            - name: HEIMDALL_AWS_SECRET_ACCESS_KEY
+              value: "/5pswHkrCgWhMYrV7TM7oVm8VtulfzdYKE2rlS8"
+            - name: HEIMDALL_REDIS_HOST
+              value: "172.30.11.235"
+            - name: HEIMDALL_REDIS_PORT
+              value: "6379"
+            - name: HEIMDALL_JWT_REQUIRED_FIELDS
+              value: "[]"
+            - name: HEIMDALL_REDIS_DB
+              value: "0"
+            - name: HEIMDALL_REDIS_USER
+              value: "bnd"
+            - name: HEIMDALL_REDIS_PASSWORD
+              value: "jkl321pqr"
+            - name: MIST_REDIS_HOST
+              value: "172.30.11.235"
+            - name: MIST_REDIS_PORT
+              value: "6379"
+            - name: MIST_REDIS_DB
+              value: "8"
+            - name: MIST_REDIS_USER
+              value: "bnd"
+            - name: MIST_REDIS_PASSWORD
+              value: "jkl321pqr"
+            - name: MIST_AWS_ACCESS_KEY_ID
+              value: "AKIATZVFXI25USQWCS5O"
+            - name: MIST_AWS_SECRET_ACCESS_KEY
+              value: "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"
+            - name: MIST_REGION_NAME
+              value: "sa-east-1"
+            - name: MIST_BUCKET_NAME_KEY
+              value: "auth-gateway"
+            - name: MIST_JWT_FILE_BUCKET_NAME
+              value: "mist_rsa"
+            - name: MIST_ELECTRONIC_SIGNATURE_FILE_BUCKET_NAME
+              value: "eletronic-signature-key"
+            - name: MIST_JWT_REQUIRED_FIELDS
+              value: "['unique_id']"
+            - name: MIST_MONGODB_CONNECTION
+              value: "mongodb://bnd:jkl321pqr@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary&appname=MongoDB%20Compass&ssl=false"
+            - name: MIST_AUTH_DATABASE_NAME
+              value: "lionx"
+            - name: MIST_AUTH_DATABASE_USER_COLLECTION
+              value: "users"
+            - name: MIST_ELECTRONIC_SIGNATURE_MAX_ATTEMPTS
+              value: "5"
+
+  version: 2
