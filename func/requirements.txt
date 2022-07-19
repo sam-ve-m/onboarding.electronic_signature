@@ -2,9 +2,7 @@
 asgiref==3.5.2
 boto3==1.21.21
 flask==2.1.2
-heimdall-client==2.2.0
+heimdall-client==2.3.1
 mist-client==2.2.0
 persephone-client==1.4.2
-pip-chill==1.0.1
-pytest-asyncio==0.18.3
 strenum==0.4.8
