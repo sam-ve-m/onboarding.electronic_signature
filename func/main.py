@@ -28,7 +28,10 @@ async def set_electronic_signature() -> Response:
     try:
         unique_id = await JwtService.decode_jwt_and_get_unique_id(jwt=jwt)
         electronic_signature_validated = ElectronicSignature(**raw_electronic_signature).dict()
-        success = await ElectronicSignatureService.set_on_user(unique_id=unique_id, electronic_signature_validated=electronic_signature_validated)
+        success = await ElectronicSignatureService.set_on_user(
+            unique_id=unique_id,
+            electronic_signature_validated=electronic_signature_validated
+        )
         response = ResponseModel(
             success=success,
             code=InternalCode.SUCCESS,
