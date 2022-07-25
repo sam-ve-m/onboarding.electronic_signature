@@ -33,7 +33,7 @@ spec:
             - name: PERSEPHONE_ELECTRONIC_SIGNATURE_SCHEMA
               value: "user_set_electronic_signature_schema"
             - name: PERSEPHONE_TOPIC_USER
-              value: "sphinx_persephone.user.crud"
+              value: "sphinx-persephone.user.crud"
             - name: PERSEPHONE_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: MONGO_CONNECTION_URL
@@ -56,16 +56,8 @@ spec:
               value: "[]"
             - name: HEIMDALL_REDIS_URL
               value: "redis://heimdal:LLOnmUUffhaUHnewIz@172.30.11.235:6379?db=1"
-            - name: MIST_REDIS_HOST
-              value: "172.30.11.235"
-            - name: MIST_REDIS_PORT
-              value: "6379"
-            - name: MIST_REDIS_DB
-              value: "8"
-            - name: MIST_REDIS_USER
-              value: "mist"
-            - name: MIST_REDIS_PASSWORD
-              value: "InPuaku76Jbdsa"
+            - name: MIST_REDIS_URL
+              value: "redis://mist:InPuaku76Jbdsa@172.30.11.235:6379?db=8"
             - name: MIST_AWS_ACCESS_KEY_ID
               value: "AKIATZVFXI25USQWCS5O"
             - name: MIST_AWS_SECRET_ACCESS_KEY
@@ -73,13 +65,13 @@ spec:
             - name: MIST_REGION_NAME
               value: "sa-east-1"
             - name: MIST_BUCKET_NAME_KEY
-              value: "auth-gateway"
+              value: "auth-gateway-keys-dev"
             - name: MIST_JWT_FILE_BUCKET_NAME
               value: "mist_rsa"
             - name: MIST_ELECTRONIC_SIGNATURE_FILE_BUCKET_NAME
               value: "eletronic-signature-key"
             - name: MIST_JWT_REQUIRED_FIELDS
-              value: "['unique_id']"
+              value: "[]"
             - name: MIST_MONGODB_CONNECTION
               value: "mongodb://mist:Anm8irJdsanmdsapqoiwu@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary"
             - name: MIST_AUTH_DATABASE_NAME

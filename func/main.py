@@ -42,15 +42,15 @@ async def set_electronic_signature() -> Response:
     except ErrorOnDecodeJwt as ex:
         Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.JWT_INVALID, message='Invalid token'
+            success=False, code=InternalCode.JWT_INVALID, message='Unauthorized token'
         ).build_http_response(status=HTTPStatus.UNAUTHORIZED)
         return response
 
     except UserUniqueIdNotExists as ex:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.DATA_NOT_FOUND, message=msg_error
-        ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            success=False, code=InternalCode.DATA_NOT_FOUND, message='User unique_id not exists'
+        ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except UserElectronicSignatureAlreadyExists as ex:

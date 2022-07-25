@@ -33,7 +33,7 @@ spec:
             - name: PERSEPHONE_ELECTRONIC_SIGNATURE_SCHEMA
               value: "user_set_electronic_signature_schema"
             - name: PERSEPHONE_TOPIC_USER
-              value: "sphinx_persephone.user.crud"
+              value: "sphinx-persephone.user.crud"
             - name: PERSEPHONE_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: MONGO_CONNECTION_URL
