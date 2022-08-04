@@ -81,7 +81,8 @@ async def set_electronic_signature() -> Response:
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
-    except ValueError:
+    except ValueError as ex:
+        Gladsheim.error(error=ex)
         response = ResponseModel(
             success=False, code=InternalCode.INVALID_PARAMS, message="Invalid params"
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)

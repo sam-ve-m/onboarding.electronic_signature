@@ -17,7 +17,7 @@ class SecurityService:
         )
         if status != MistStatusResponses.SUCCESS:
             Gladsheim.error(
-                message=f"Error when encrypt password: {MistStatusResponses.SUCCESS.value}"
+                message=f"Error trying to encrypt::{status=}",
             )
             raise ErrorOnEncryptElectronicSignature
         return result["encrypted_password"]
