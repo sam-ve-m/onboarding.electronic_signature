@@ -27,7 +27,7 @@ class ElectronicSignatureService:
             unique_id=unique_id,
             user_electronic_signature=user_electronic_signature
         )
-        if not user_updated.acknowledged:
+        if not user_updated.matched_count:
             raise ErrorOnUpdateUser
         return True
 
