@@ -82,4 +82,6 @@ spec:
               value: "5"
             - name: MIST_ENCRYPT_KEY
               value: "c_-e_-e_-e_-i_-i"
+            - name: ONBOARDING_STEPS_BR_URL
+              value: "http://fission.dev-lionx.com.br/onboarding/steps_br"
   version: 2
