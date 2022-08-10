@@ -1,7 +1,7 @@
 # Jormungandr - Onboarding
-from func.src.services.electronic_signature import ElectronicSignatureService, UserElectronicSignatureAlreadyExists
+from func.src.services.electronic_signature import ElectronicSignatureService, UserElectronicSignatureAlreadyExists, InvalidOnboardingCurrentStep
 from func.src.domain.exceptions import UserUniqueIdNotExists, ErrorOnUpdateUser, ErrorOnSendAuditLog
-from .stubs import stub_unique_id, stub_user, stub_electronic_signature_validated, stub_user_updated, stub_user_not_updated
+from .stubs import stub_unique_id, stub_user, stub_payload_validated, stub_user_updated, stub_user_not_updated
 
 # Third party
 from unittest.mock import patch
@@ -44,7 +44,7 @@ async def test_when_valid_user_and_electronic_signature_exists_then_raises(mock_
 async def test_when_set_electronic_signature_with_success_then_return_true(mock_signature_exists, mock_audit, mock_update):
     success = await ElectronicSignatureService.set_on_user(
         unique_id=stub_unique_id,
-        electronic_signature_validated=stub_electronic_signature_validated
+        payload_validated=stub_payload_validated
     )
 
     assert success is True
@@ -59,7 +59,7 @@ async def test_when_update_user_with_electronic_signature_then_raises(mock_signa
     with pytest.raises(ErrorOnUpdateUser):
         await ElectronicSignatureService.set_on_user(
             unique_id=stub_unique_id,
-            electronic_signature_validated=stub_electronic_signature_validated
+            payload_validated=stub_payload_validated
         )
 
 
@@ -70,5 +70,20 @@ async def test_when_fail_to_send_audit_log_then_raises(mock_signature_exists, mo
     with pytest.raises(ErrorOnSendAuditLog):
         await ElectronicSignatureService.set_on_user(
             unique_id=stub_unique_id,
-            electronic_signature_validated=stub_electronic_signature_validated
+            payload_validated=stub_payload_validated
         )
+
+
+@pytest.mark.asyncio
+@patch("func.src.services.electronic_signature.OnboardingSteps.get_user_current_step", return_value="electronic_signature")
+async def test_when_current_step_correct_then_return_true(mock_onboarding_steps):
+    result = await ElectronicSignatureService.validate_current_onboarding_step(jwt="123")
+
+    assert result is True
+
+
+@pytest.mark.asyncio
+@patch("func.src.services.electronic_signature.OnboardingSteps.get_user_current_step", return_value="finished")
+async def test_when_current_step_invalid_then_return_raises(mock_onboarding_steps):
+    with pytest.raises(InvalidOnboardingCurrentStep):
+        await ElectronicSignatureService.validate_current_onboarding_step(jwt="123")

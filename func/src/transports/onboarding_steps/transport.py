@@ -14,7 +14,7 @@ class OnboardingSteps:
     @staticmethod
     async def get_user_current_step(jwt: str) -> str:
         headers = {'x-thebes-answer': jwt}
-        async with AsyncClient as httpx_client:
+        async with AsyncClient() as httpx_client:
             request_result = await httpx_client.get(
                 config("ONBOARDING_STEPS_BR_URL"),
                 headers=headers
