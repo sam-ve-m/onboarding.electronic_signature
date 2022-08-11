@@ -15,13 +15,17 @@ class UserUniqueIdNotExists(Exception):
 
 
 class UserElectronicSignatureAlreadyExists(Exception):
-    msg = "Jormungandr-Onboarding::_verify_user_and_electronic_signature_exists::User electronic signature already" \
-          " exists"
+    msg = (
+        "Jormungandr-Onboarding::_verify_user_and_electronic_signature_exists::User electronic signature already"
+        " exists"
+    )
 
 
 class ErrorOnSendAuditLog(Exception):
-    msg = "Jormungandr-Onboarding::set_electronic_signature::Error when trying to send log audit on " \
-          "Persephone"
+    msg = (
+        "Jormungandr-Onboarding::set_electronic_signature::Error when trying to send log audit on "
+        "Persephone"
+    )
 
 
 class ErrorOnUpdateUser(Exception):

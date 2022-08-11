@@ -17,10 +17,12 @@ class Audit:
 
     @classmethod
     async def register_log(cls, electronic_signature_model: UserElectronicSignature):
-        message = await electronic_signature_model.get_user_electronic_signature_template()
+        message = (
+            await electronic_signature_model.get_user_electronic_signature_template()
+        )
         (
             success,
-            status_sent_to_persephone
+            status_sent_to_persephone,
         ) = await cls.audit_client.send_to_persephone(
             topic=cls.topic,
             partition=cls.partition,
@@ -28,5 +30,7 @@ class Audit:
             schema_name=cls.schema_name,
         )
         if not success:
-            Gladsheim.error(message="Audit::register_user_log::Error on trying to register log")
+            Gladsheim.error(
+                message="Audit::register_user_log::Error on trying to register log"
+            )
             raise ErrorOnSendAuditLog

@@ -1,3 +1,4 @@
+# Standards
 from enum import IntEnum
 
 
@@ -6,6 +7,3 @@ class QueueTypes(IntEnum):
 
     def __repr__(self):
         return self.value
-
-
-

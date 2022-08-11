@@ -11,7 +11,7 @@ from src.domain.exceptions import (
     ErrorOnEncryptElectronicSignature,
     ErrorOnGetUniqueId,
     OnboardingStepsStatusCodeNotOk,
-    InvalidOnboardingCurrentStep
+    InvalidOnboardingCurrentStep,
 )
 from src.services.jwt import JwtService
 from src.services.electronic_signature import ElectronicSignatureService
@@ -32,7 +32,9 @@ async def set_electronic_signature() -> Response:
         payload_validated = ElectronicSignature(**raw_payload).dict()
         unique_id = await JwtService.decode_jwt_and_get_unique_id(jwt=jwt)
         await ElectronicSignatureService.validate_current_onboarding_step(jwt=jwt)
-        success = await ElectronicSignatureService.set_on_user(unique_id=unique_id, payload_validated=payload_validated)
+        success = await ElectronicSignatureService.set_on_user(
+            unique_id=unique_id, payload_validated=payload_validated
+        )
         response = ResponseModel(
             success=success,
             code=InternalCode.SUCCESS,
@@ -43,42 +45,52 @@ async def set_electronic_signature() -> Response:
     except ErrorOnDecodeJwt as ex:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.JWT_INVALID, message='Unauthorized token'
+            success=False, code=InternalCode.JWT_INVALID, message="Unauthorized token"
         ).build_http_response(status=HTTPStatus.UNAUTHORIZED)
         return response
 
     except ErrorOnGetUniqueId as ex:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.JWT_INVALID, message='Fail to get unique_id'
+            success=False,
+            code=InternalCode.JWT_INVALID,
+            message="Fail to get unique_id",
         ).build_http_response(status=HTTPStatus.UNAUTHORIZED)
         return response
 
     except OnboardingStepsStatusCodeNotOk as ex:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.ONBOARDING_STEP_REQUEST_FAILURE, message=msg_error
+            success=False,
+            code=InternalCode.ONBOARDING_STEP_REQUEST_FAILURE,
+            message=msg_error,
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
     except InvalidOnboardingCurrentStep as ex:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.ONBOARDING_STEP_INCORRECT, message='Current step is not electronic signature'
+            success=False,
+            code=InternalCode.ONBOARDING_STEP_INCORRECT,
+            message="Current step is not electronic signature",
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except UserUniqueIdNotExists as ex:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.DATA_NOT_FOUND, message='User unique_id not exists'
+            success=False,
+            code=InternalCode.DATA_NOT_FOUND,
+            message="User unique_id not exists",
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except UserElectronicSignatureAlreadyExists as ex:
         Gladsheim.info(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.DATA_ALREADY_EXISTS, message="User electronic signature already exists"
+            success=False,
+            code=InternalCode.DATA_ALREADY_EXISTS,
+            message="User electronic signature already exists",
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
