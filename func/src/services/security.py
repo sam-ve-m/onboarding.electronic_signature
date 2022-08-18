@@ -1,5 +1,5 @@
 # Jormungandr - Onboarding
-from ..domain.exceptions import ErrorOnEncryptElectronicSignature
+from ..domain.exceptions.exceptions import ErrorOnEncryptElectronicSignature
 
 # Third party
 from etria_logger import Gladsheim
@@ -11,7 +11,7 @@ class SecurityService:
     mist = Mist
 
     @classmethod
-    async def encrypt_password(cls, electronic_signature: str):
+    async def encrypt_password(cls, electronic_signature: str) -> str:
         result, status = await cls.mist.generate_encrypted_password(
             user_password=electronic_signature
         )

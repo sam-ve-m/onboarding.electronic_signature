@@ -2,7 +2,6 @@
 from ..base_repository.base import MongoDbBaseRepository
 
 # Third party
-from decouple import config
 from etria_logger import Gladsheim
 
 

@@ -1,7 +1,7 @@
 # Jormungandr - Onboarding
 from func.src.services.security import SecurityService
-from func.src.domain.exceptions import ErrorOnEncryptElectronicSignature
-from tests.src.stubs import stub_electronic_signature_str, stub_mist_result
+from func.src.domain.exceptions.exceptions import ErrorOnEncryptElectronicSignature
+from tests.src.services.electronic_signature.stubs import stub_electronic_signature_str, stub_mist_result
 
 # Standards
 from unittest.mock import patch

@@ -1,8 +1,8 @@
 # Jormungandr - Onboarding
 from src.domain.response.model import ResponseModel
 from src.domain.enums.code import InternalCode
-from src.domain.validator import ElectronicSignature
-from src.domain.exceptions import (
+from func.src.domain.validators.validator import ElectronicSignature
+from src.domain.exceptions.exceptions import (
     ErrorOnUpdateUser,
     UserUniqueIdNotExists,
     ErrorOnDecodeJwt,
@@ -29,7 +29,7 @@ async def set_electronic_signature() -> Response:
     jwt = request.headers.get("x-thebes-answer")
     msg_error = "Unexpected error occurred"
     try:
-        payload_validated = ElectronicSignature(**raw_payload).dict()
+        payload_validated = ElectronicSignature(**raw_payload)
         unique_id = await JwtService.decode_jwt_and_get_unique_id(jwt=jwt)
         await ElectronicSignatureService.validate_current_onboarding_step(jwt=jwt)
         success = await ElectronicSignatureService.set_on_user(
