@@ -37,8 +37,8 @@ spec:
       ExecutorType: newdeploy
       MaxScale: 1
       MinScale: 1
-      SpecializationTimeout: 120
-      TargetCPUPercent: 0
+      SpecializationTimeout: 10
+      TargetCPUPercent: 80
     StrategyType: execution
   concurrency: 500
   environment:

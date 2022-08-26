@@ -1,7 +1,7 @@
 # Jormungandr - Onboarding
 from src.domain.response.model import ResponseModel
 from src.domain.enums.code import InternalCode
-from func.src.domain.validators.validator import ElectronicSignature
+from src.domain.validators.validator import ElectronicSignature
 from src.domain.exceptions.exceptions import (
     ErrorOnUpdateUser,
     UserUniqueIdNotExists,
