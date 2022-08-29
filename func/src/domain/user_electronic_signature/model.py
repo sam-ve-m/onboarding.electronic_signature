@@ -1,3 +1,4 @@
+# Jormungandr - Onboarding
 from ..enums.user import UserLevel
 
 
@@ -10,7 +11,7 @@ class UserElectronicSignature:
         self.is_blocked_electronic_signature = False
         self.electronic_signature_wrong_attempts = 0
 
-    async def get_user_update_template(self):
+    async def get_user_update_template(self) -> dict:
         template = {
             "scope.user_level": self.user_level,
             "electronic_signature": self.encrypted_electronic_signature,

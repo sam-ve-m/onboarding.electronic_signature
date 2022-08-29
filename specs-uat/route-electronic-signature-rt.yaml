@@ -14,10 +14,10 @@ spec:
   ingressconfig:
     annotations: null
     host: '*'
-    path: /onboarding/set-electronic-signature
+    path: /onboarding/set_electronic_signature
     tls: ""
   method: ""
   methods:
   - POST
   prefix: ""
-  relativeurl: /onboarding/set-electronic-signature
+  relativeurl: /onboarding/set_electronic_signature
