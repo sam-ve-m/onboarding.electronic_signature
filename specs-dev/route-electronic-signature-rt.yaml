@@ -18,6 +18,6 @@ spec:
     tls: ""
   method: ""
   methods:
-  - POST
+  - PUT
   prefix: ""
   relativeurl: /onboarding/set_electronic_signature
