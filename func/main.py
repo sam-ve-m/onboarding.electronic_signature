@@ -21,12 +21,12 @@ from http import HTTPStatus
 
 # Third party
 from etria_logger import Gladsheim
-from flask import request, Response
+import flask
 
 
-async def set_electronic_signature() -> Response:
-    raw_payload = request.json
-    jwt = request.headers.get("x-thebes-answer")
+async def set_electronic_signature() -> flask.Response:
+    raw_payload = flask.request.json
+    jwt = flask.request.headers.get("x-thebes-answer")
     msg_error = "Unexpected error occurred"
     try:
         payload_validated = ElectronicSignature(**raw_payload)
@@ -37,94 +37,94 @@ async def set_electronic_signature() -> Response:
         )
         response = ResponseModel(
             success=success,
-            code=InternalCode.SUCCESS,
+            code=InternalCode.SUCCESS.value,
             message="Electronic signature successfully created",
         ).build_http_response(status=HTTPStatus.OK)
         return response
 
     except ErrorOnDecodeJwt as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.JWT_INVALID, message="Unauthorized token"
+            success=False, code=InternalCode.JWT_INVALID.value, message="Unauthorized token"
         ).build_http_response(status=HTTPStatus.UNAUTHORIZED)
         return response
 
     except ErrorOnGetUniqueId as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
             success=False,
-            code=InternalCode.JWT_INVALID,
+            code=InternalCode.JWT_INVALID.value,
             message="Fail to get unique_id",
         ).build_http_response(status=HTTPStatus.UNAUTHORIZED)
         return response
 
     except OnboardingStepsStatusCodeNotOk as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
             success=False,
-            code=InternalCode.ONBOARDING_STEP_REQUEST_FAILURE,
+            code=InternalCode.ONBOARDING_STEP_REQUEST_FAILURE.value,
             message=msg_error,
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
     except InvalidOnboardingCurrentStep as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
             success=False,
-            code=InternalCode.ONBOARDING_STEP_INCORRECT,
-            message="Current step is not electronic signature",
+            code=InternalCode.ONBOARDING_STEP_INCORRECT.value,
+            message="User is not in correct step",
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except UserUniqueIdNotExists as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
             success=False,
-            code=InternalCode.DATA_NOT_FOUND,
+            code=InternalCode.DATA_NOT_FOUND.value,
             message="User unique_id not exists",
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except UserElectronicSignatureAlreadyExists as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
             success=False,
-            code=InternalCode.DATA_ALREADY_EXISTS,
+            code=InternalCode.DATA_ALREADY_EXISTS.value,
             message="User electronic signature already exists",
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except ErrorOnEncryptElectronicSignature as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.INTERNAL_SERVER_ERROR, message=msg_error
+            success=False, code=InternalCode.INTERNAL_SERVER_ERROR.value, message=msg_error
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
     except ErrorOnUpdateUser as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.INTERNAL_SERVER_ERROR, message=msg_error
+            success=False, code=InternalCode.INTERNAL_SERVER_ERROR.value, message=msg_error
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
     except ErrorOnSendAuditLog as ex:
-        Gladsheim.info(error=ex, message=ex.msg)
+        Gladsheim.error(error=ex, message=ex.msg)
         response = ResponseModel(
-            success=False, code=InternalCode.INTERNAL_SERVER_ERROR, message=msg_error
+            success=False, code=InternalCode.INTERNAL_SERVER_ERROR.value, message=msg_error
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
     except ValueError as ex:
-        Gladsheim.info(error=ex)
+        Gladsheim.error(error=ex, message=str(ex))
         response = ResponseModel(
-            success=False, code=InternalCode.INVALID_PARAMS, message="Invalid params"
+            success=False, code=InternalCode.INVALID_PARAMS.value, message="Invalid params"
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except Exception as ex:
-        Gladsheim.error(error=ex)
+        Gladsheim.error(error=ex, message=str(ex))
         response = ResponseModel(
-            success=False, code=InternalCode.INTERNAL_SERVER_ERROR, message=msg_error
+            success=False, code=InternalCode.INTERNAL_SERVER_ERROR.value, message=msg_error
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
