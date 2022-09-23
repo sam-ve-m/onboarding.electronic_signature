@@ -51,5 +51,5 @@ spec:
     packageref:
       name: electronic-signature-fn-227f68eb-2920-4d51-8c02-763ba29582ea
       namespace: default
-  requestsPerPod: 1
+  requestsPerPod: 10000
   resources: {}

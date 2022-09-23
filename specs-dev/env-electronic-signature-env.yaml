@@ -56,7 +56,7 @@ spec:
             - name: HEIMDALL_REDIS_URL
               value: "redis://heimdal:LLOnmUUffhaUHnewIz@172.30.11.235:6379?db=1"
             - name: MIST_REDIS_URL
-              value: "redis://mist:InPuaku76Jbdsa@172.30.11.235:6379?db=8"
+              value: "redis://mist:InPuaku76Jbdsa@172.30.11.235:6379?db=1"
             - name: MIST_AWS_ACCESS_KEY_ID
               value: "AKIATZVFXI25USQWCS5O"
             - name: MIST_AWS_SECRET_ACCESS_KEY
