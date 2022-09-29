@@ -1,0 +1,55 @@
+include:
+- ./func/*
+kind: ArchiveUploadSpec
+name: func-wt8K
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: electronic-signature-fn-227f68eb-2920-4d51-8c02-763ba29582ea
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: electronic-signature-env
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://func-wt8K
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2022-07-08T18:42:53Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: electronic-signature-fn
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: newdeploy
+      MaxScale: 3
+      MinScale: 1
+      SpecializationTimeout: 10
+      TargetCPUPercent: 80
+    StrategyType: execution
+  concurrency: 500
+  environment:
+    name: electronic-signature-env
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: main.set_electronic_signature
+    packageref:
+      name: electronic-signature-fn-227f68eb-2920-4d51-8c02-763ba29582ea
+      namespace: default
+  requestsPerPod: 10000
+  resources: {}
