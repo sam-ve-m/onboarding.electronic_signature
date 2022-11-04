@@ -1,0 +1,55 @@
+include:
+- ./func/*
+kind: ArchiveUploadSpec
+name: func-qy8M
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: electronic-signature-fn-9c17c740-8603-4697-901b-07333a7626c8
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: electronic-signature-env
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://func-qy8M
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2022-07-20T03:20:45Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: electronic-signature-fn
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: newdeploy
+      MaxScale: 3
+      MinScale: 1
+      SpecializationTimeout: 10
+      TargetCPUPercent: 80
+    StrategyType: execution
+  concurrency: 500
+  environment:
+    name: electronic-signature-env
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: main.set_electronic_signature
+    packageref:
+      name: electronic-signature-fn-9c17c740-8603-4697-901b-07333a7626c8
+      namespace: default
+  requestsPerPod: 10000
+  resources: {}
