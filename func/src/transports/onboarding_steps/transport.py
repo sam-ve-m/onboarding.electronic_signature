@@ -1,12 +1,9 @@
-# Jormungandr - Onboarding
-from ...domain.exceptions.exceptions import OnboardingStepsStatusCodeNotOk
-
-# Third party
-from httpx import AsyncClient
-from decouple import config
-
-# Standards
 from http import HTTPStatus
+
+from decouple import config
+from httpx import AsyncClient
+
+from ...domain.exceptions.exceptions import OnboardingStepsStatusCodeNotOk
 
 
 class OnboardingSteps:
@@ -18,7 +15,7 @@ class OnboardingSteps:
                 config("ONBOARDING_STEPS_BR_URL"), headers=headers
             )
             if not request_result.status_code == HTTPStatus.OK:
-                raise OnboardingStepsStatusCodeNotOk
+                raise OnboardingStepsStatusCodeNotOk()
             user_current_step = (
                 request_result.json().get("result", {}).get("current_step")
             )

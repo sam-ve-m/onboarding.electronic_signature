@@ -6,7 +6,6 @@ from etria_logger import Gladsheim
 
 
 class UserRepository(MongoDbBaseRepository):
-
     @classmethod
     async def find_one_by_unique_id(cls, unique_id: str) -> dict:
         collection = await cls._get_collection()

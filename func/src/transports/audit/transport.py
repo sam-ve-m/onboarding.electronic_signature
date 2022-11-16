@@ -1,19 +1,19 @@
-# Jormungandr - Onboarding
-from ...domain.exceptions.exceptions import ErrorOnSendAuditLog
-from ...domain.enums.types import QueueTypes
-from ...domain.user_electronic_signature.model import UserElectronicSignature
-
-# Third party
 from decouple import config
 from etria_logger import Gladsheim
 from persephone_client import Persephone
+
+from ...domain.enums.types import QueueTypes
+from ...domain.exceptions.exceptions import ErrorOnSendAuditLog
+from ...domain.user_electronic_signature.model import UserElectronicSignature
 
 
 class Audit:
     audit_client = Persephone
 
     @classmethod
-    async def record_message_log(cls, electronic_signature_model: UserElectronicSignature) -> bool:
+    async def record_message_log(
+        cls, electronic_signature_model: UserElectronicSignature
+    ) -> bool:
         message = (
             await electronic_signature_model.get_user_electronic_signature_template()
         )
@@ -33,5 +33,5 @@ class Audit:
             Gladsheim.error(
                 message="Audit::register_user_log::Error on trying to record message log"
             )
-            raise ErrorOnSendAuditLog
+            raise ErrorOnSendAuditLog()
         return True
