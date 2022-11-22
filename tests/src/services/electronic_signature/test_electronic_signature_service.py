@@ -1,12 +1,15 @@
-# Jormungandr - Onboarding
+from unittest.mock import patch
+
+import pytest
+
+from func.src.domain.exceptions.exceptions import (
+    UserUniqueIdNotExists,
+    ErrorOnUpdateUser,
+)
 from func.src.services.electronic_signature import (
     ElectronicSignatureService,
     UserElectronicSignatureAlreadyExists,
     InvalidOnboardingCurrentStep,
-)
-from func.src.domain.exceptions.exceptions import (
-    UserUniqueIdNotExists,
-    ErrorOnUpdateUser,
 )
 from func.src.services.security import SecurityService
 from tests.src.services.electronic_signature.stubs import (
@@ -15,13 +18,8 @@ from tests.src.services.electronic_signature.stubs import (
     stub_payload_validated,
     stub_user_updated,
     stub_user_not_updated,
+    stub_device_info,
 )
-
-# Standards
-from unittest.mock import patch
-
-# Third party
-import pytest
 
 
 @pytest.mark.asyncio
@@ -74,14 +72,14 @@ async def test_when_valid_user_and_electronic_signature_exists_then_raises(
 @patch.object(
     ElectronicSignatureService, "_verify_user_and_electronic_signature_exists"
 )
-@patch.object(
-    SecurityService, "encrypt_password"
-)
+@patch.object(SecurityService, "encrypt_password")
 async def test_when_set_electronic_signature_with_success_then_return_true(
     mock_encryption, mock_signature_exists, mock_audit, mock_update
 ):
     success = await ElectronicSignatureService.set_on_user(
-        unique_id=stub_unique_id, payload_validated=stub_payload_validated
+        unique_id=stub_unique_id,
+        payload_validated=stub_payload_validated,
+        device_info=stub_device_info,
     )
 
     assert success is True
@@ -96,15 +94,15 @@ async def test_when_set_electronic_signature_with_success_then_return_true(
 @patch.object(
     ElectronicSignatureService, "_verify_user_and_electronic_signature_exists"
 )
-@patch.object(
-    SecurityService, "encrypt_password"
-)
+@patch.object(SecurityService, "encrypt_password")
 async def test_when_update_user_with_electronic_signature_then_raises(
     mock_encryption, mock_signature_exists, mock_audit, mock_update
 ):
     with pytest.raises(ErrorOnUpdateUser):
         await ElectronicSignatureService.set_on_user(
-            unique_id=stub_unique_id, payload_validated=stub_payload_validated
+            unique_id=stub_unique_id,
+            payload_validated=stub_payload_validated,
+            device_info=stub_device_info,
         )
 
 

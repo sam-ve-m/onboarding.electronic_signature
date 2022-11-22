@@ -38,3 +38,11 @@ class OnboardingStepsStatusCodeNotOk(Exception):
 
 class InvalidOnboardingCurrentStep(Exception):
     msg = "Jormungandr-Onboarding::validate_current_onboarding_step::User is not in the electronic signature step"
+
+
+class DeviceInfoRequestFailed(Exception):
+    msg = "Error trying to get device info"
+
+
+class DeviceInfoNotSupplied(Exception):
+    msg = "Device info not supplied"

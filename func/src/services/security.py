@@ -19,5 +19,5 @@ class SecurityService:
             Gladsheim.error(
                 message=f"Error trying to encrypt::{status=}",
             )
-            raise ErrorOnEncryptElectronicSignature
+            raise ErrorOnEncryptElectronicSignature()
         return result["encrypted_password"]
