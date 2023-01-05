@@ -1,5 +1,4 @@
-#!/bin/bash
 fission spec init
-fission env create --spec --name electronic-signature-env --image nexus.sigame.com.br/fission-async:0.1.6 --builder nexus.sigame.com.br/fission-builder-3.8:0.0.1
-fission fn create --spec --name electronic-signature-fn --env electronic-signature-env --src "./func/*" --entrypoint main.set_electronic_signature --executortype newdeploy --maxscale 1
-fission route create --spec --name electronic-signature-rt --method PUT --url /onboarding/set_electronic_signature --function electronic-signature-fn
+fission env create --spec --name onb-br-signature-env --image nexus.sigame.com.br/fission-onboarding-br-electronic-signature:0.1.0 --poolsize 0 --version 3 --imagepullsecret "nexus-v3" --spec
+fission fn create --spec --name onb-br-signature-fn --env onb-br-signature-env --code fission.py --targetcpu 80 --executortype newdeploy --maxscale 3 --requestsperpod 10000 --spec
+fission route create --spec --name onb-br-signature-rt --method PUT --url /onboarding/set_electronic_signature --function onb-br-signature-fn

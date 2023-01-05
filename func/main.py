@@ -3,8 +3,8 @@ from http import HTTPStatus
 import flask
 from etria_logger import Gladsheim
 
-from src.domain.enums.code import InternalCode
-from src.domain.exceptions.exceptions import (
+from func.src.domain.enums.code import InternalCode
+from func.src.domain.exceptions.exceptions import (
     ErrorOnUpdateUser,
     UserUniqueIdNotExists,
     ErrorOnDecodeJwt,
@@ -17,11 +17,11 @@ from src.domain.exceptions.exceptions import (
     DeviceInfoRequestFailed,
     DeviceInfoNotSupplied,
 )
-from src.domain.response.model import ResponseModel
-from src.domain.validators.validator import ElectronicSignature
-from src.services.electronic_signature import ElectronicSignatureService
-from src.services.jwt import JwtService
-from src.transports.device_info.transport import DeviceSecurity
+from func.src.domain.response.model import ResponseModel
+from func.src.domain.validators.validator import ElectronicSignature
+from func.src.services.electronic_signature import ElectronicSignatureService
+from func.src.services.jwt import JwtService
+from func.src.transports.device_info.transport import DeviceSecurity
 
 
 async def set_electronic_signature() -> flask.Response:

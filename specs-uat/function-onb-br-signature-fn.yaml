@@ -1,35 +1,35 @@
 include:
-- ./func/*
+- fission.py
 kind: ArchiveUploadSpec
-name: func-qy8M
+name: fission-py-JUjv
 
 ---
 apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: electronic-signature-fn-9c17c740-8603-4697-901b-07333a7626c8
+  name: onb-br-signature-fn-5bd4c6d9-1e0d-4074-bdfe-33b8291b24ae
   namespace: default
 spec:
   deployment:
     checksum: {}
+    type: url
+    url: archive://fission-py-JUjv
   environment:
-    name: electronic-signature-env
+    name: onb-br-signature-env
     namespace: default
   source:
     checksum: {}
-    type: url
-    url: archive://func-qy8M
 status:
-  buildstatus: pending
-  lastUpdateTimestamp: "2022-07-20T03:20:45Z"
+  buildstatus: none
+  lastUpdateTimestamp: "2023-01-05T16:33:38Z"
 
 ---
 apiVersion: fission.io/v1
 kind: Function
 metadata:
   creationTimestamp: null
-  name: electronic-signature-fn
+  name: onb-br-signature-fn
   namespace: default
 spec:
   InvokeStrategy:
@@ -37,19 +37,25 @@ spec:
       ExecutorType: newdeploy
       MaxScale: 3
       MinScale: 1
-      SpecializationTimeout: 10
-      TargetCPUPercent: 80
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+      hpaMetrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 80
+            type: Utilization
+        type: Resource
     StrategyType: execution
   concurrency: 500
   environment:
-    name: electronic-signature-env
+    name: onb-br-signature-env
     namespace: default
   functionTimeout: 60
   idletimeout: 120
   package:
-    functionName: main.set_electronic_signature
     packageref:
-      name: electronic-signature-fn-9c17c740-8603-4697-901b-07333a7626c8
+      name: onb-br-signature-fn-5bd4c6d9-1e0d-4074-bdfe-33b8291b24ae
       namespace: default
   requestsPerPod: 10000
   resources: {}
