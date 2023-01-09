@@ -6,18 +6,18 @@ import flask
 import pytest
 from decouple import RepositoryEnv, Config
 
-from src.transports.device_info.transport import DeviceSecurity
+from func.src.transports.device_info.transport import DeviceSecurity
 
 with patch.object(RepositoryEnv, "__init__", return_value=None):
     with patch.object(Config, "__init__", return_value=None):
         with patch.object(Config, "__call__"):
             with patch.object(logging.config, "dictConfig"):
                 from etria_logger import Gladsheim
-                from src.services.jwt import JwtService
-                from main import set_electronic_signature
-                from src.domain.enums.code import InternalCode
-                from src.domain.response.model import ResponseModel
-                from src.domain.exceptions.exceptions import (
+                from func.src.services.jwt import JwtService
+                from func.main import set_electronic_signature
+                from func.src.domain.enums.code import InternalCode
+                from func.src.domain.response.model import ResponseModel
+                from func.src.domain.exceptions.exceptions import (
                     UserUniqueIdNotExists,
                     UserElectronicSignatureAlreadyExists,
                     ErrorOnSendAuditLog,
@@ -30,8 +30,8 @@ with patch.object(RepositoryEnv, "__init__", return_value=None):
                     DeviceInfoRequestFailed,
                     DeviceInfoNotSupplied,
                 )
-                from src.domain.validators.validator import ElectronicSignature
-                from src.services.electronic_signature import ElectronicSignatureService
+                from func.src.domain.validators.validator import ElectronicSignature
+                from func.src.services.electronic_signature import ElectronicSignatureService
 
 
 error_on_update_user_case = (

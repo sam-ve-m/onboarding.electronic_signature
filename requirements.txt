@@ -8,3 +8,8 @@ boto3==1.21.21
 flask==2.1.2
 strenum==0.4.8
 httpx==0.23.0
+
+uvloop==0.17.0
+asgiref==3.5.2
+hypercorn==0.14.3
+uvicorn==0.20.0

@@ -1,6 +1,6 @@
 from func.src.domain.user_electronic_signature.model import UserElectronicSignature
 from func.src.domain.validators.validator import ElectronicSignature
-from src.domain.models.device_info import DeviceInfo
+from func.src.domain.models.device_info import DeviceInfo
 
 
 class UserUpdated:
